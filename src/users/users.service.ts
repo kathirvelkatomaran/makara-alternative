@@ -5,18 +5,19 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class UsersService {
   constructor(private readonly prisma: PrismaService) { }
   async create(data: any) {
-    const db = this.prisma.forSchema(data.tenant)
-    return db.user.create({
+    const client = await this.prisma.getCurrentClient();
+    return await client.$primary().user.create({
       data: {
-        email: `test-${Date.now()}@example.com`,
-        name: 'NEW User',
-      },
-    })
+        name:"Name Test User",
+        email:`${Date.now()}test@example.com`,
+      }
+    });
   }
 
-nv
   async findMany(tenant: string) {
-    const db = this.prisma.forSchema(tenant)
-    return db.user.findMany();
+    const client = await this.prisma.getCurrentClient();
+    return await client.$replica().user.findMany();
+    // const db = this.prisma.forSchema(tenant)
+    // return db.$replica().user.findMany();
   }
 }
