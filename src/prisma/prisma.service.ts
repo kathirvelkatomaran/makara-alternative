@@ -41,6 +41,7 @@ export class PrismaService implements OnModuleInit, OnModuleDestroy {
     });
 
     const replicaUrls = ["postgresql://app:app123@localhost:5434/appdb?application_name=replica1", "postgresql://app:app123@localhost:5435/appdb?application_name=replica2"].map(u => this.withSchema(u, schema));
+
     const withReplicas = base.$extends(readReplicas({ url: replicaUrls }));
 
     return withReplicas;

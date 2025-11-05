@@ -14,7 +14,6 @@ export class UsersService {
     })
   }
 
-nv
   async findMany(tenant: string) {
     const db = this.prisma.forSchema(tenant)
     return db.user.findMany();
